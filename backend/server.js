@@ -180,5 +180,5 @@ app.post("/api/register", (req, res) => {
 });
   
 app.listen(5000, () =>
-  console.log("🚀 Backend running on http://localhost:5000")
+  console.log("🚀 Backend running on https://epicure-voyage.onrender.com")
 );

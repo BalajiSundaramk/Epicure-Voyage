@@ -17,8 +17,8 @@ function Login() {
     };
 
     const url = isRegister
-      ? "http://localhost:5000/api/register"
-      : "http://localhost:5000/api/login";
+      ? "https://epicure-voyage.onrender.com/api/register"
+      : "https://epicure-voyage.onrender.com/api/login";
 
     try {
       const res = await fetch(url, {

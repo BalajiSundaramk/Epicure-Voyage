@@ -80,7 +80,7 @@ const handleBooking = async (tour, customer) => {
 
     console.log("BOOKING PAYLOAD:", payload);
 
-    const res = await fetch("http://localhost:5000/api/bookings", {
+    const res = await fetch("https://epicure-voyage.onrender.com/api/bookings", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),

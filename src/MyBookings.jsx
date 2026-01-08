@@ -8,7 +8,7 @@ function MyBookings() {
   useEffect(() => {
     if (!user) return;
 
-    fetch(`http://localhost:5000/api/my-bookings/${user.user_id}`)
+    fetch(`https://epicure-voyage.onrender.com/api/my-bookings/${user.user_id}`)
       .then(res => res.json())
       .then(data => {
         setBookings(data);

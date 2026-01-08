@@ -16,7 +16,7 @@ function AdminBookings() {
 
   // ✅ Fetch bookings
   const fetchBookings = () => {
-    fetch("http://localhost:5000/api/bookings")
+    fetch("https://epicure-voyage.onrender.com/api/bookings")
       .then(res => res.json())
       .then(data => {
         setBookings(data);
@@ -30,7 +30,7 @@ function AdminBookings() {
 
   // ✅ Fetch stats
   const fetchStats = () => {
-    fetch("http://localhost:5000/api/admin/stats")
+    fetch("https://epicure-voyage.onrender.com/api/admin/stats")
       .then(res => res.json())
       .then(data => setStats(data))
       .catch(err => console.error(err));
@@ -44,7 +44,7 @@ function AdminBookings() {
   // ✅ Update booking status
   const updateStatus = async (id, newStatus) => {
     try {
-      await fetch(`http://localhost:5000/api/bookings/${id}/status`, {
+      await fetch(`https://epicure-voyage.onrender.com/api/bookings/${id}/status`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ status: newStatus }),
