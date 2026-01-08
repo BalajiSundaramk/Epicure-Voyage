@@ -12,6 +12,7 @@
   "dependencies": {
     "body-parser": "^2.2.1",
     "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
     "express": "^5.2.1",
     "framer-motion": "^12.23.24",
     "mysql2": "^3.16.0",
