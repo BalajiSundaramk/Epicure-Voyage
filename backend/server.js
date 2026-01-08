@@ -6,12 +6,10 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// ✅ TEST ROUTE
 app.get("/", (req, res) => {
   res.send("Tour Booking API is running");
 });
 
-// ✅ MYSQL CONNECTION
 const db = mysql.createConnection({
   host: "localhost",
   user: "root",
@@ -27,7 +25,6 @@ db.connect(err => {
   console.log("✅ MySQL connected");
 });
 
-// ✅ GET ALL BOOKINGS (ADMIN)
 app.get("/api/bookings", (req, res) => {
   db.query("SELECT * FROM bookings ORDER BY booking_date DESC", (err, rows) => {
     if (err) {
@@ -37,7 +34,6 @@ app.get("/api/bookings", (req, res) => {
   });
 });
 
-// ✅ CREATE BOOKING
 app.post("/api/bookings", (req, res) => {
   console.log("BACKEND BODY:", req.body);
 
@@ -75,7 +71,6 @@ app.post("/api/bookings", (req, res) => {
   );
 });
 
-// ✅ ADMIN STATS
 app.get("/api/admin/stats", (req, res) => {
   const sql = `
     SELECT 
@@ -95,7 +90,6 @@ app.get("/api/admin/stats", (req, res) => {
   });
 });
 
-// ✅ CUSTOMER BOOKINGS (MY TRIPS)
 app.get("/api/my-bookings/:userId", (req, res) => {
   const userId = req.params.userId;
 
@@ -116,7 +110,6 @@ app.get("/api/my-bookings/:userId", (req, res) => {
   });
 });
 
-// ✅ UPDATE BOOKING STATUS (ADMIN)
 app.put("/api/bookings/:id/status", (req, res) => {
   const { id } = req.params;
   const { status } = req.body;
@@ -134,7 +127,6 @@ app.put("/api/bookings/:id/status", (req, res) => {
   });
 });
 
-// ✅ LOGIN API (FIXED)
 app.post("/api/login", (req, res) => {
   const { email, password } = req.body;
 
@@ -146,7 +138,7 @@ app.post("/api/login", (req, res) => {
       return res.status(401).json({ error: "Invalid credentials" });
     }
 
-    const user = rows[0]; // ✅ FIX
+    const user = rows[0]; 
 
     res.json({
       message: "Login successful",
@@ -160,7 +152,6 @@ app.post("/api/login", (req, res) => {
   });
 });
 
-// ✅ REGISTER CUSTOMER (FIXED)
 app.post("/api/register", (req, res) => {
   const { name, email, password } = req.body;
 
@@ -175,7 +166,7 @@ app.post("/api/register", (req, res) => {
 
     res.json({
       user: {
-        user_id: result.insertId, // ✅ FIX
+        user_id: result.insertId, 
         name,
         email,
         role: "CUSTOMER"
@@ -183,8 +174,7 @@ app.post("/api/register", (req, res) => {
     });
   });
 });
-
-// ✅ SERVER START
+  
 app.listen(5000, () =>
   console.log("🚀 Backend running on http://localhost:5000")
 );
