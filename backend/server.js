@@ -1,5 +1,6 @@
 import dotenv from "dotenv";
 dotenv.config();
+
 import express from "express";
 import mysql from "mysql2";
 import cors from "cors";
@@ -12,28 +13,31 @@ app.get("/", (req, res) => {
   res.send("Tour Booking API is running");
 });
 
-const db = mysql.createConnection({
-  host: process.env.MYSQLHOST,
-  user: process.env.MYSQLUSER,
-  password: process.env.MYSQLPASSWORD,
-  database: process.env.MYSQLDATABASE,
-  port: process.env.MYSQLPORT
+const pool = mysql.createPool({
+  host: process.env.DB_HOST,
+  port: Number(process.env.DB_PORT),
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+
+  waitForConnections: true,
+  connectionLimit: 10,
+  connectTimeout: 30000,
+  enableKeepAlive: true,
+
+  ssl: {
+    rejectUnauthorized: false
+  }
 });
 
-
-db.connect(err => {
-  if (err) {
-    console.error("❌ MySQL error:", err);
-    return;
-  }
-  console.log("✅ MySQL connected");
+pool.query("SELECT 1", (err) => {
+  if (err) console.error("❌ pool.connection failed:", err);
+  else console.log("✅ MySQL pool connected");
 });
 
 app.get("/api/bookings", (req, res) => {
-  db.query("SELECT * FROM bookings ORDER BY booking_date DESC", (err, rows) => {
-    if (err) {
-      return res.status(500).json({ error: err.message });
-    }
+  pool.query("SELECT * FROM bookings ORDER BY booking_date DESC", (err, rows) => {
+    if (err) return res.status(500).json({ error: err.message });
     res.json(rows);
   });
 });
@@ -58,8 +62,7 @@ app.post("/api/bookings", (req, res) => {
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'Pending')
   `;
 
-  db.query(
-    sql,
+  pool.query(sql,
     [customerId, tourId, tourPackage, visitDate, proofType, proofNumber, paymentMethod, amountPaid],
     (err, result) => {
       if (err) {
@@ -85,11 +88,8 @@ app.get("/api/admin/stats", (req, res) => {
     FROM bookings
   `;
 
-  db.query(sql, (err, rows) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).json({ error: "Failed to fetch stats" });
-    }
+  pool.query(sql, (err, rows) => {
+    if (err) return res.status(500).json({ error: "Failed to fetch stats" });
     res.json(rows[0]);
   });
 });
@@ -105,11 +105,8 @@ app.get("/api/my-bookings/:userId", (req, res) => {
     ORDER BY booking_date DESC
   `;
 
-  db.query(sql, [userId], (err, rows) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).json({ error: "Failed to fetch bookings" });
-    }
+  pool.query(sql, [userId], (err, rows) => {
+    if (err) return res.status(500).json({ error: "Failed to fetch bookings" });
     res.json(rows);
   });
 });
@@ -124,25 +121,22 @@ app.put("/api/bookings/:id/status", (req, res) => {
     WHERE booking_id = ?
   `;
 
-  db.query(query, [status, id], (err) => {
+  pool.query(query, [status, id], (err) => {
     if (err) return res.status(500).json({ error: err.message });
-
     res.json({ message: "Status updated successfully" });
   });
 });
+
 
 app.post("/api/login", (req, res) => {
   const { email, password } = req.body;
 
   const sql = "SELECT user_id, name, email, role FROM users WHERE email=? AND password=?";
-  db.query(sql, [email, password], (err, rows) => {
+  pool.query(sql, [email, password], (err, rows) => {
     if (err) return res.status(500).json({ error: err.message });
+    if (rows.length === 0) return res.status(401).json({ error: "Invalid credentials" });
 
-    if (rows.length === 0) {
-      return res.status(401).json({ error: "Invalid credentials" });
-    }
-
-    const user = rows[0]; 
+    const user = rows[0];
 
     res.json({
       message: "Login successful",
@@ -156,11 +150,12 @@ app.post("/api/login", (req, res) => {
   });
 });
 
+
 app.post("/api/register", (req, res) => {
   const { name, email, password } = req.body;
 
   const sql = "INSERT INTO users (name,email,password,role) VALUES (?,?,?,'CUSTOMER')";
-  db.query(sql, [name, email, password], (err, result) => {
+  pool.query(sql, [name, email, password], (err, result) => {
     if (err) {
       if (err.code === "ER_DUP_ENTRY") {
         return res.status(400).json({ error: "Email already exists" });
@@ -170,7 +165,7 @@ app.post("/api/register", (req, res) => {
 
     res.json({
       user: {
-        user_id: result.insertId, 
+        user_id: result.insertId,
         name,
         email,
         role: "CUSTOMER"
@@ -178,7 +173,9 @@ app.post("/api/register", (req, res) => {
     });
   });
 });
-  
-app.listen(5000, () =>
-  console.log("🚀 Backend running on https://epicure-voyage.onrender.com")
-);
+
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT, () => {
+  console.log("🚀 Backend running on port " + PORT);
+});
