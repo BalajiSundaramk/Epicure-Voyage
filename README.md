@@ -119,20 +119,6 @@ npm install
 npm start
 
 
-Create a .env file in backend:
-
-DB_HOST=your_host
-
-DB_PORT=your_port
-
-DB_USER=your_user
-
-DB_PASSWORD=your_password
-
-DB_NAME=your_database
-
-
-
 👨‍🎓 Author
 
 Balaji S
