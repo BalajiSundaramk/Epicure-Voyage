@@ -11,62 +11,12 @@ Epicure Voyage is a full-stack tourism web application that allows users to expl
 
 🗄️ Database: MySQL (Cloud – Railway)
 
-✨ Features
-
-👤 User
-
-*User registration & login
-
-*Browse destinations & tour packages
-
-*Book tours
-
-*View “My Trips”
-
-*Online / offline payment option
-
-🛠 Admin
-
-*Admin login
-
-*View all bookings
-
-*Booking statistics (confirmed, pending, cancelled)
-
-*Update booking status
-
-🧑‍💻 Tech Stack
-
-Frontend
-
-*React + Vite
-
-*React Router
-
-*CSS / Tailwind
-
-*Deployed on Netlify
-
-Backend
-
-*Node.js
-
-*Express.js
-
-*MySQL2
-
-*dotenv, cors
-
-*Deployed on Render
-
-Database
-
-*MySQL (Railway cloud database)
-
 🏗️ System Architecture
 
 React (Netlify)
+
 ➡️ Express API (Render)
+
 ➡️ MySQL Database (Railway)
 
 🔑 Sample Logins
@@ -77,46 +27,8 @@ Email: balaji@epicure.com
 Password: admin
 
 User
+
 Register a new user from the website
-
-📁 Project Structure
-
-Epicure-Voyage/
-
-│
-
-├── frontend/   (React + Vite)
-
-│
-
-├── backend/    (Node + Express)
-
-│
-
-└── database/   (MySQL – Railway)
-
-⚙️ Run Locally
-
-1️⃣ Clone repository
-git clone https://github.com/BalajiSundaramk/Epicure-Voyage.git
-
-Run: cd Epicure-Voyage
-
-2️⃣ Frontend
-
-cd frontend
-
-npm install
-
-npm run dev
-
-3️⃣ Backend
-
-cd backend
-
-npm install
-
-npm start
 
 
 👨‍🎓 Author
