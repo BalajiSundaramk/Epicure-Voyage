@@ -2,6 +2,8 @@
 
 Epicure Voyage is a full-stack tourism web application that allows users to explore destinations, book tours, and manage their trips. It also includes an admin dashboard to monitor and manage bookings. The project is fully deployed with a cloud database.
 
+🔗 Live Links
+
 🌐 Frontend (Website):
 👉 https://epicurevoyage.netlify.app/
 
