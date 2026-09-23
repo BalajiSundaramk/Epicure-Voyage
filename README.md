@@ -23,6 +23,7 @@ React (Netlify)
 🔑 Sample Logins
 
 Admin
+
 Contact the author for demo admin credentials.
 
 User
