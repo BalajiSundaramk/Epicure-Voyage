@@ -24,7 +24,9 @@ React (Netlify)
 
 Admin
 
-Contact the author for demo admin credentials.
+Admin Email: demo@epicure.com
+
+Admin Password: Demo@1234
 
 User
 
