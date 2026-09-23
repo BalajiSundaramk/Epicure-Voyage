@@ -10,7 +10,7 @@ Epicure Voyage is a full-stack tourism web application that allows users to expl
 ⚙️ Backend (API):
 👉 https://epicure-voyage.onrender.com
 
-🗄️ Database: MySQL (Cloud – Railway)
+🗄️ Database: MySQL (Cloud – Aiven)
 
 🏗️ System Architecture
 
@@ -18,19 +18,16 @@ React (Netlify)
 
 ➡️ Express API (Render)
 
-➡️ MySQL Database (Railway)
+➡️ MySQL Database (Aiven)
 
 🔑 Sample Logins
 
 Admin
-Email: balaji@epicure.com
-
-Password: admin
+Contact the author for demo admin credentials.
 
 User
 
 Register a new user from the website
-
 
 👨‍🎓 Author
 
@@ -39,4 +36,3 @@ Balaji S
 Full Stack Developer
 
 GitHub: https://github.com/BalajiSundaramk
-
